@@ -4,7 +4,7 @@ import unittest
 import getpathInfo
 from common import HTMLTestRunner
 from common.configHttp import  RunMain
-import common.HTMLTestRunner
+
 reportPath=getpathInfo.get_resultpath()
 
 class requestDemo:
