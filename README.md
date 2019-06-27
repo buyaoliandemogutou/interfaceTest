@@ -1,7 +1,7 @@
 # interfaceTest
 测试框架
 
-configEmail.py   --配置Email
+configEmail.py   --配置Email  
 configHttp.py    --配置http，封装set\get方法
 HTMLTestRunner.py--测试结果集成到HTML
 Log.py           --写日志文件
