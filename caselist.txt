@@ -1,4 +1,4 @@
-user/testFindlogistics
+#user/testFindlogistics
 user/testGetZone
 #user/test01case
 #user/test02case
