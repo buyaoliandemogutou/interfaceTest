@@ -10,11 +10,11 @@ class sendReport:
         nowTime=time.strftime("%Y-%m-%d", time.localtime())
         resultPath=getpathInfo.set_reportPath()
         sender = '1096902145@qq.com'
-        receiver = '18109045175@163.com'
+        receiver = '18109045175@163.com,2537664035@qq.com'
         smtpserver = 'smtp.qq.com'
         username = '1096902145@qq.com'
         password = 'rwbqymuewstufdha'
-        mail_title = nowTime+'API测试报告'
+        mail_title = nowTime+' API测试报告'
 
         # 读取html文件内容
         resultPath=getpathInfo.set_reportPath()

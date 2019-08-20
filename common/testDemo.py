@@ -61,6 +61,7 @@ class unitDemo(unittest.TestCase):
 #cls=readExcel().get_xls('userCase.xlsx', 'login')
 
 
+
 if __name__ == '__main__':
 
     suite=unittest.TestSuite()
