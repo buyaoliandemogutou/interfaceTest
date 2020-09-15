@@ -1,11 +1,11 @@
 from common.configHttp import RunMain
-import readExcel
+from common import readExcel
 import paramunittest
 import unittest
-import common.Log
+# import common.Log
 
-login_xls=readExcel.readExcel().excel_data_list('userCase.xlsx', 'login')
-log = common.Log.logger
+login_xls= readExcel.readExcel().excel_data_list('userCase.xlsx', 'login')
+# log = common.Log.logger
 #print(login_xls)
 
 @paramunittest.parametrized(*login_xls)
@@ -30,13 +30,16 @@ class testFind(unittest.TestCase):
         #log.info(self.casename, "测试结束，输出log完结\n\n")
 
     def checkResult(self):
+        headers = {'Content-Type': 'application/json; charset=UTF-8'}
         url=self.url+self.path
-        result=RunMain().run_main(self.method,url,self.params)
-        exp=RunMain().getValue(result,'message')
+        response=RunMain().requests(self.method,url,self.params,headers)
+        # exp=RunMain().getValue(response,'token')
+        exp=response.json()
         #print('请求的message:'+ exp+'读取的message：'+self.msg)
         #self.assertEqual(exp,self.msg)
-        if self.assertEqual(exp,self.msg) is 'False':
-            log.info('断言失败:'+'exp='+exp+'msg='+self.msg)
+        if self.assertEqual(exp,self.msg) =='False':
+            print(exp,self.msg)
+            # log.info('断言失败:'+'exp='+exp+'msg='+self.msg)
 
 if __name__ == '__main__':
     unittest.main()

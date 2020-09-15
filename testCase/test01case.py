@@ -4,9 +4,7 @@ from common.configHttp import RunMain
 import paramunittest
 import geturlParams
 import urllib.parse
-# import pythoncom
-import readExcel
-# pythoncom.CoInitialize()
+from common import readExcel
 
 url = geturlParams.geturlParams().get_Url()# 调用我们的geturlParams获取我们拼接的URL
 login_xls = readExcel.readExcel().get_xls('userCase.xlsx', 'login')

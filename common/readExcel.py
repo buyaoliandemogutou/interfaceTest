@@ -1,14 +1,13 @@
 import os
 import unittest
-import requests
 from common.configHttp import RunMain
 from ddt import ddt,data
 import xlwt as xlwt
-import getpathInfo# 自己定义的内部类，该类返回项目的绝对路径
 #调用读Excel的第三方库xlrd
 from xlrd import open_workbook
+import getpathInfo
 # 拿到该项目所在的绝对路径
-path = getpathInfo.get_Path()
+path = getpathInfo.MakePath().get_Path()
 
 class readExcel():
     def excel_data_list(self, xls_name, sheetname):
@@ -79,7 +78,7 @@ class testRegister(unittest.TestCase):
         #data=eval(data_item['params'])   eval转换为字典型数据，不然系统识别不了
         result=RunMain().run_main(data_item['method'],data_item['url']+data_item['path'],data)
         print(result.json())
-        message=RunMain().getValue(result,'message')
+        message=RunMain().getStatus(result,'message')
         try:
             print(message)
             self.assertEqual(data_item['msg'],message)
@@ -89,14 +88,13 @@ class testRegister(unittest.TestCase):
 
 
 if __name__ == '__main__':#我们执行该文件测试一下是否可以正确获取Excel中的值
-    '''
-    test_data=readExcel().excel_data_list('userCase.xlsx', 'login')
-    print('第一种方法：',test_data)
-    cls=readExcel().get_xls('userCase.xlsx', 'login')
-    print(readExcel().get_xls('userCase.xlsx', 'login'))
-    for i in cls:
-        for j in range(len(i)):
-            print(i[j])
-    '''
+    # test_data=readExcel().excel_data_list('userCase.xlsx', 'login')
+    # print('第一种方法：',test_data)
+    # cls=readExcel().get_xls('userCase.xlsx', 'login')
+    # print(readExcel().get_xls('userCase.xlsx', 'login'))
+    # for i in cls:
+    #     for j in range(len(i)):
+    #         print(i[j])
+
     unittest.main()
 

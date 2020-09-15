@@ -1,11 +1,10 @@
 import requests
-import readExcel
 import unittest
-import getpathInfo
 from common import HTMLTestRunner
+import getpathInfo
 from common.configHttp import  RunMain
 
-reportPath=getpathInfo.get_resultpath()
+reportPath= getpathInfo.get_resultpath()
 
 class requestDemo:
     def run_main(self,url,params,method):

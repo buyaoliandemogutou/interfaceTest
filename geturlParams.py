@@ -1,5 +1,5 @@
 import readConfig as readConfig
-from readExcel import readExcel
+from common.readExcel import readExcel
 
 readconfig = readConfig.ReadConfig()
 

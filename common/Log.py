@@ -3,15 +3,16 @@ import logging
 import threading
 from logging.handlers import TimedRotatingFileHandler
 import getpathInfo
-import  time
+import time
 
-path = getpathInfo.get_resultpath()
+path = getpathInfo.get_resultpath('result')
 #log_path = os.path.join(path, 'result')  # 存放log文件的路径
 class Logger(object):
     def __init__(self, logger_name='logs…'):
         self.logger = logging.getLogger(logger_name)
         logging.root.setLevel(logging.NOTSET)
         self.log_file_name = 'logs.' +time.strftime("%Y-%m-%d", time.localtime()) # 日志文件的名称
+
         self.backup_count = 5  # 最多存放日志的数量
         # 日志输出级别
         self.console_output_level = 'WARNING'
@@ -35,7 +36,6 @@ class Logger(object):
             file_handler.setLevel(self.file_output_level)
             self.logger.addHandler(file_handler)
         return self.logger
-
 
 logger = Logger().get_logger()
 
@@ -160,8 +160,8 @@ class MyLog:
 #
 #         return MyLog.log
 #
-# if __name__ == "__main__":
-#     log = MyLog.get_log()
-#     logger = log.get_logger()
-#     logger.debug("test debug")
-#     logger.info("test info")
+if __name__ == "__main__":
+    log = MyLog.get_log()
+    logger = log.get_logger()
+    logger.debug("test debug")
+    logger.info("test info")

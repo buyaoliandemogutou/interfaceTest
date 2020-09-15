@@ -2,8 +2,6 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from datetime import datetime
-import threading
 
 import getpathInfo
 import readConfig as readConfig
@@ -14,7 +12,7 @@ import time
 localReadConfig = readConfig.ReadConfig()
 reportpath = getpathInfo.get_resultpath()
 nowTime=time.strftime("%Y-%m-%d", time.localtime())
-resultPath=getpathInfo.set_reportPath()
+resultPath= getpathInfo.set_reportPath()
 
 class Email:
     def __init__(self):

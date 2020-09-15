@@ -1,14 +1,13 @@
 import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 import getpathInfo
 import time
 
 class sendReport:
     def sendReport(self):
         nowTime=time.strftime("%Y-%m-%d", time.localtime())
-        resultPath=getpathInfo.set_reportPath()
+        resultPath= getpathInfo.set_reportPath()
         sender = '1096902145@qq.com'
         receiver = '18109045175@163.com,2537664035@qq.com'
         smtpserver = 'smtp.qq.com'
@@ -17,7 +16,7 @@ class sendReport:
         mail_title = nowTime+' API测试报告'
 
         # 读取html文件内容
-        resultPath=getpathInfo.set_reportPath()
+        resultPath= getpathInfo.set_reportPath()
         f = open(resultPath, 'rb')  # HTML文件默认和当前文件在同一路径下，若不在同一路径下，需要指定要发送的HTML文件的路径
         mail_body = f.read()
         f.close()

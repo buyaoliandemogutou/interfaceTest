@@ -11,13 +11,13 @@ from common.configEmail import Email
 path = getpathInfo.get_Path()
 on_off = readConfig.ReadConfig().get_email('on_off')
 log = common.Log.logger
-resultPath=getpathInfo.set_reportPath()
+# resultPath = getpathInfo.set_reportPath()
 
 class AllTest:#定义一个类AllTest
     def __init__(self):#初始化一些参数和数据
         global resultPath
         #resultPath = os.path.join(report_path, "report.html")#result/report.html
-        resultPath=getpathInfo.set_reportPath()
+        resultPath = getpathInfo.set_reportPath()
         self.caseListFile = os.path.join(path, "caselist.txt")#配置执行哪些测试文件的配置文件路径
         self.caseFile = os.path.join(path, "testCase")#真正的测试断言文件路径
         self.caseList = []

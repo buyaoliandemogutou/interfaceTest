@@ -1,10 +1,10 @@
 from common.configHttp import RunMain
-import readExcel
+from common import readExcel
 import paramunittest
 import unittest
 import common.Log
 
-getZone=readExcel.readExcel().excel_data_list('userCase.xlsx','getZone')
+getZone= readExcel.readExcel().excel_data_list('userCase.xlsx', 'getZone')
 log=common.Log.logger
 
 @paramunittest.parametrized(*getZone)

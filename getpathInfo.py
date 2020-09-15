@@ -20,8 +20,8 @@ class MakePath():
             os.makedirs(resultpath) # 创建多层目录
             return resultpath
     #命名html文件并添加到路径
-    def set_reportPath(self,reportNmae):
-        reportPath=MakePath().get_resultpath()
+    def set_reportPath(self,pathName,reportNmae):
+        reportPath=MakePath().get_resultpath(pathName)
         #reportName='report.'+nowTime+'.html'
         resultPath = os.path.join(reportPath, reportNmae)
         return resultPath
@@ -29,4 +29,4 @@ class MakePath():
 if __name__ == '__main__':# 执行该文件，测试下是否OK
     print('测试路径是否OK,路径为：', MakePath().get_Path())
     print('测试路径是否OK,路径为：', MakePath().get_resultpath('result'))
-    print('测试报告的路径：'+MakePath().set_reportPath(nowTime+'html'))
+    print('测试报告的路径：'+MakePath().set_reportPath('result',nowTime+'.html'))
