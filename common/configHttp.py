@@ -8,7 +8,7 @@ class RunMain():
         # 参数必须按照url、data顺序传入
         if httpMethod.lower()==('post'):#.upper（）小写转大写
             try:
-                result = requests.post(url=url, data=json.dumps(data),headers=headers,verify=False)  # 因为这里要封装post方法，所以这里的url和data值不能写死
+                result = requests.post(url=url, data=json.dumps(data),headers=headers,verify=False)
                 return result
             except BaseException as e:
                 print("post请求出现了异常：{0}".format(e))

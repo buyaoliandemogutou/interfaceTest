@@ -7,7 +7,6 @@ import time
 class sendReport:
     def sendReport(self):
         nowTime=time.strftime("%Y-%m-%d", time.localtime())
-        resultPath= getpathInfo.set_reportPath()
         sender = '1096902145@qq.com'
         receiver = '18109045175@163.com,2537664035@qq.com'
         smtpserver = 'smtp.qq.com'
@@ -25,7 +24,6 @@ class sendReport:
         # filehtml['Content-Type'] = 'application/octet-stream'
         # filehtml['Content-Disposition'] = 'attachment; filename="report.html"'html
 
-
         # 邮件内容, 格式, 编码
         message = MIMEText(mail_body, 'html', 'utf-8')
         message['From'] = sender
@@ -41,8 +39,6 @@ class sendReport:
             smtp.quit()
         except smtplib.SMTPException:
             print("发送邮件失败！！！"+smtplib.SMTPException)
-
-
 
 if __name__ == '__main__':
     sendReport().sendReport()

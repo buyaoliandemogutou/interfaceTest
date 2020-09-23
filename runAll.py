@@ -39,7 +39,6 @@ class AllTest:#定义一个类AllTest
 
     def set_case_suite(self):
         """
-
         :return:
         """
         self.set_case_list()#通过set_case_list()拿到caselist元素组

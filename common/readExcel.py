@@ -8,7 +8,7 @@ from xlrd import open_workbook
 import getpathInfo
 # 拿到该项目所在的绝对路径
 path = getpathInfo.MakePath().get_Path()
-
+# path=os.path.dirname("usercase.xlsx")
 class readExcel():
     def excel_data_list(self, xls_name, sheetname):
         data_list = []
