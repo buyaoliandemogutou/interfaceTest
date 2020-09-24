@@ -14,7 +14,8 @@ class RunMain():
                 print("post请求出现了异常：{0}".format(e))
         elif httpMethod.lower()==('get'):
             try:
-                result=requests.get(url=url,data=json.dumps(data),headers=headers,verify=False)
+                # data=json.loads(data)
+                result = requests.get(url=url, params=None, headers=headers, verify=False)
                 return result
             except Exception as e:
                 print("get请求出现了异常：{0}".format(e))
@@ -45,5 +46,13 @@ if __name__ == '__main__':#通过写死参数，来验证我们写的请求是�
     print(test.json())
     print(RunMain().getValue(test,'message'))
     print(RunMain().getStatus(test))
+    token=RunMain().getValue(test,'token')
+    # headers=
+    param1={'osType':'Android'}
+    result=RunMain().requests('get','https://cloud.synwing.com:8443/health_app_v2/app/verUpdate/check/SYN_HEALTH_MED', param1, headers)
+    # result=requests.get('https://cloud.synwing.com:8443/health_app_v2/app/verUpdate/check/SYN_HEALTH_MED',{"osType":"Android"},headers=token)
+    print(result)
+    print(result.json())
+
 
 

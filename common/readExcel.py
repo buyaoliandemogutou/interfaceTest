@@ -35,6 +35,7 @@ class readExcel():
                 if item['id'] in case_id:
                     final_data.append(item)
         return final_data
+
     def get_xls(self,xls_name, sheet_name):# xls_name填写用例的Excel名称 sheet_name该Excel的sheet名称
         cls = []
         # 获取用例文件路径
@@ -63,38 +64,13 @@ class readExcel():
             return True
         else:
             return False
-test_data=readExcel().excel_data_list('userCase.xlsx', 'login')
-@ddt
-class testRegister(unittest.TestCase):
-    def setUp(self):
-        print("开始执行测试用例")
-    def tearDown(self):
-        print("测试用例执行完毕")
-
-    @data(*test_data)
-    def test_register(self,data_item):
-        #调用configHttp runmain
-        print(data_item['method'],data_item['url']+data_item['path'],data_item['params'])
-        #data=eval(data_item['params'])   eval转换为字典型数据，不然系统识别不了
-        result=RunMain().run_main(data_item['method'],data_item['url']+data_item['path'],data)
-        print(result.json())
-        message=RunMain().getStatus(result,'message')
-        try:
-            print(message)
-            self.assertEqual(data_item['msg'],message)
-        except AssertionError as e:
-            print('Failed')
-            raise  e
-
-
 if __name__ == '__main__':#我们执行该文件测试一下是否可以正确获取Excel中的值
-    # test_data=readExcel().excel_data_list('userCase.xlsx', 'login')
-    # print('第一种方法：',test_data)
+    test_data=readExcel().excel_data_list('userCase.xlsx', 'login')
+    print('第一种方法：',test_data)
     # cls=readExcel().get_xls('userCase.xlsx', 'login')
     # print(readExcel().get_xls('userCase.xlsx', 'login'))
     # for i in cls:
     #     for j in range(len(i)):
     #         print(i[j])
-
-    unittest.main()
+    # unittest.main()
 

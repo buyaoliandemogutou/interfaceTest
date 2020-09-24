@@ -1,14 +1,11 @@
-import json
 import unittest
-from common  import  configHttp
+from common import configHttp
 import paramunittest
-import geturlParams
-import urllib.parse
 from common import readExcel
 
 # url = geturlParams.geturlParams().get_Url()# 调用我们的geturlParams获取我们拼接的URL
 login_xls = readExcel.readExcel().excel_data_list('userCase.xlsx', 'login')
-
+print(login_xls)
 @paramunittest.parametrized(*login_xls)
 class testUserLogin(unittest.TestCase):
     def setParameters(self, casename, method, path, url, params, status):
@@ -20,7 +17,7 @@ class testUserLogin(unittest.TestCase):
         :param method
         :return:
         """
-        self.case_name = str(casename)
+        self.case = casename
         self.method = str(method)
         self.path = str(path)
         self.url = str(url)
@@ -32,13 +29,13 @@ class testUserLogin(unittest.TestCase):
         test report description
         :return:
         """
-        self.case_name
+        self.case
 
     def setUp(self):
         """
         :return:
         """
-        print(self.case_name+"测试开始前准备")
+        print(self.case+"测试开始前准备")
 
     def test01case(self):
         self.checkResult()
@@ -60,7 +57,7 @@ class testUserLogin(unittest.TestCase):
         status=configHttp.RunMain().getStatus(result)
         print(status)
         if status == 1:
-            print(self.case_name+":测试通过")
+            print(self.case+":测试通过")
         else:
             print("测试失败")
         # ss = json.loads(info)# 将响应转换为字典格式
