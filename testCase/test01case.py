@@ -2,10 +2,11 @@ import unittest
 from common import configHttp
 import paramunittest
 from common import readExcel
+from common.Log import MyLog
 
-# url = geturlParams.geturlParams().get_Url()# 调用我们的geturlParams获取我们拼接的URL
+log = MyLog().get_log()
+logger = log.get_logger()
 login_xls = readExcel.readExcel().excel_data_list('userCase.xlsx', 'login')
-print(login_xls)
 @paramunittest.parametrized(*login_xls)
 class testUserLogin(unittest.TestCase):
     def setParameters(self, casename, method, path, url, params, status):
@@ -17,31 +18,25 @@ class testUserLogin(unittest.TestCase):
         :param method
         :return:
         """
-        self.case = casename
+        self.case = str(casename)
         self.method = str(method)
         self.path = str(path)
         self.url = str(url)
         self.params = str(params)
-        self.status = status
-
-    def description(self):
-        """
-        test report description
-        :return:
-        """
-        self.case
+        self.status = int(status)
 
     def setUp(self):
         """
         :return:
         """
         print(self.case+"测试开始前准备")
+        logger.info(self.case+'测试开始！')
 
     def test01case(self):
         self.checkResult()
 
     def tearDown(self):
-
+        logger.info(self.case+'测试结束！')
         print("测试结束，输出log完结\n\n")
 
     def checkResult(self):# 断言
@@ -49,24 +44,18 @@ class testUserLogin(unittest.TestCase):
         check test result
         :return:
         """
-        # url1 = "http://www.xxx.com/login?"
         new_url = self.url + self.path
         # data1 = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(new_url).query))# 将一个完整的URL中的name=&pwd=转换为{'name':'xxx','pwd':'bbb'}
-        headers="Content-Type: application/json; charset=UTF-8"
-        result = configHttp.RunMain().requests(self.method, new_url, dict(self.params),headers)# 根据Excel中的method调用run_main来进行requests请求，并拿到响应
-        status=configHttp.RunMain().getStatus(result)
-        print(status)
-        if status == 1:
-            print(self.case+":测试通过")
+        headers = {'Content-Type': 'application/json; charset=UTF-8'}
+        result = configHttp.RunMain().requests(self.method, new_url, self.params,headers)# 根据Excel中的method调用run_main来进行requests请求，并拿到响应
+        status = configHttp.RunMain().getValue(result,'status')
+        if self.assertEqual(self.status,status)== False:
+            print(self.case+'测试失败')
+            logger.info(self.case+'测试失败!')
+            logger.info('断言失败:'+'exp='+self.status+'实际请求='+status)
         else:
-            print("测试失败")
-        # ss = json.loads(info)# 将响应转换为字典格式
-        # if self.case_name == 'login':# 如果case_name是login，说明合法，返回的code应该为200
-        #     self.assertEqual(ss['code'], 200)
-        # if self.case_name == 'login_error':# 同上
-        #     self.assertEqual(ss['code'], -1)
-        # if self.case_name == 'login_null':# 同上
-        #     self.assertEqual(ss['code'], 10001)
+            logger.info(self.case + '测试通过!')
+            print(self.case+'测试通过')
 
 if __name__ == '__main__':
     unittest.main()

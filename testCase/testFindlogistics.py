@@ -4,26 +4,25 @@ import paramunittest
 import unittest
 from common import Log
 
-login_xls= readExcel.readExcel().excel_data_list('userCase.xlsx', 'login')
+login_xls = readExcel.readExcel().excel_data_list('userCase.xlsx', 'login')
 log = Log.logger
-#print(login_xls)
 
-@paramunittest.parametrized(*login_xls)
+@paramunittest.parametrized(
+    {"user": "admin", "psw": "123", "result": "true"},
+    {"user": "admin1", "psw": "1234", "result": "true"})
 class testFind(unittest.TestCase):
-    def setParameters(self,casename,method,path,url,params,msg):
-        self.casename=casename
-        self.method=method
-        self.path=path
-        self.url=url
-        self.params=params
-        self.msg=msg
+    def setParameters(self,user,psw,result):
+        self.casename=user
+        self.params=psw
+        self.msg=result
 
     def setUp(self):
         print(self.casename,"测试开始前准备")
         log.info(self.casename,"测试开始前准备")
 
     def testo1case(self):
-        self.checkResult()
+        print(self.casename)
+        print(self.msg+''+self.params)
 
     def tearDown(self):
         print(self.casename, "测试结束，输出log完结\n\n")
@@ -42,5 +41,5 @@ class testFind(unittest.TestCase):
             log.info('断言失败:'+'exp='+exp+'msg='+self.msg)
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)
 
