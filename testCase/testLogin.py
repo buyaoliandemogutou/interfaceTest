@@ -59,6 +59,7 @@ class testUserLogin(unittest.TestCase):
                 token = RunMain().getValue(result, 'token')
                 userid = RunMain().getValue(result, 'userid')
                 targetid = RunMain().getValue(result, 'targetid')
+                ReadConfig().set_value('token',token)
                 ReadConfig().set_value('userid', userid)
                 ReadConfig().set_value('targetid', targetid)
                 print(self.case + '测试通过')

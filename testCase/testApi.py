@@ -1,3 +1,5 @@
+import json
+from common.Log import MyLog
 from common.configHttp import RunMain
 from common import readExcel
 import paramunittest
@@ -5,7 +7,8 @@ import unittest
 from common import Log
 from readConfig import ReadConfig
 login_xls = readExcel.readExcel().excel_data_list('userCase.xlsx', 'Api')
-log = Log.logger
+log = MyLog().get_log()
+logger = log.get_logger()
 
 @paramunittest.parametrized(*login_xls)
 class testFind(unittest.TestCase):
@@ -26,30 +29,33 @@ class testFind(unittest.TestCase):
         self.status = int(status)
 
     def setUp(self):
-        print(self.casename,"测试开始前准备")
-        log.info(self.casename,"测试开始前准备")
+        print(self.casename, "测试开始前准备")
+        logger.info(self.casename, "测试开始前准备")
 
     def testo1case(self):
-        print(self.casename)
-        print(self.msg+''+self.params)
+        self.checkResult()
 
     def tearDown(self):
         print(self.casename, "测试结束，输出log完结\n\n")
-        log.info(self.casename, "测试结束，输出log完结\n\n")
+        logger.info(self.casename, "测试结束，输出log完结\n\n")
 
     def checkResult(self):
         headers = {'Content-Type': 'application/json; charset=UTF-8'}
         url = self.url+self.path
         token = ReadConfig().get_userData('token')
         headers['Authorization'] = token
+        targetid=ReadConfig().get_userData('targetid')
+        param=json.loads(self.params)
+        param['targetId'] = targetid
+        print(param)
         response = RunMain().requests(self.method, url, self.params, headers)
         status = RunMain().getValue(response, 'status')
         if self.assertEqual(self.status, status) == False:
             print(self.casename + '测试失败')
-            log.info(self.casename + '测试失败!')
-            log.info('断言失败:' + 'exp=' + self.status + '实际请求=' + status)
+            logger.info(self.casename + '测试失败!')
+            logger.info('断言失败:' + 'exp=' + self.status + '实际请求=' + status)
         else:
-            log.info(self.casename + '测试通过!')
+            logger.info(self.casename + '测试通过!')
             print(self.casename + '测试通过')
 
 if __name__ == '__main__':
