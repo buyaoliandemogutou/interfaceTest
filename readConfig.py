@@ -21,19 +21,17 @@ class ReadConfig():
     def get_token(self,token):
         token=config.get('TOKEN', token)
         return token
-    # def set_token(self,token):
-    #     try:
-    #         if config.get('TOKEN') is None:
-    #             config.set('TOKEN', 'token', token)
-    #             config.write(open(config_path, "w"))
-    #             # with open("1.ini", "w+") as f:
-    #             #     config.write(f)
-    #     except Exception as e:
-    #         print(e)
+    def set_token(self,token):
+        try:
+            config.set('TOKEN', 'token', token)
+            config.write(open(config_path, "w"))
+        except Exception as e:
+            print(e)
 
 if __name__ == '__main__':#测试一下，我们读取配置文件的方法是否可用
     print('HTTP中的baseurl值为：', ReadConfig().get_http('baseurl'))
     print('EMAIL中的开关on_off值为：', ReadConfig().get_email('on_off'))
-    # ReadConfig().set_token('1')
+    ReadConfig().set_token('222')
+    print(ReadConfig().get_token('token'))
 
 
