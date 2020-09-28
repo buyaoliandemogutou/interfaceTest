@@ -2,7 +2,6 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
 import getpathInfo
 import readConfig as readConfig
 from common.Log import MyLog
@@ -10,9 +9,9 @@ import zipfile
 import time
 
 localReadConfig = readConfig.ReadConfig()
-reportpath = getpathInfo.get_resultpath()
-nowTime=time.strftime("%Y-%m-%d", time.localtime())
-resultPath= getpathInfo.set_reportPath()
+
+nowTime = time.strftime("%Y-%m-%d", time.localtime())
+# resultPath = getpathInfo.MakePath().set_reportPath()
 
 class Email:
     def __init__(self):
@@ -20,9 +19,7 @@ class Email:
         host = localReadConfig.get_email("mail_host")
         user = localReadConfig.get_email("mail_user")
         password = localReadConfig.get_email("mail_pass")
-        #port = localReadConfig.get_email("mail_port")
         sender = localReadConfig.get_email("sender")
-        #title = localReadConfig.get_email("subject")
         mail_title = nowTime + " "+' API测试报告'
         content = localReadConfig.get_email("content")
         self.value = localReadConfig.get_email("receiver")
@@ -30,8 +27,6 @@ class Email:
         # get receiver list
         for n in str(self.value).split("/"):
             self.receiver.append(n)
-        # defined email subject
-        #date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.subject = mail_title
         self.log = MyLog.get_log()
         self.logger = self.log.get_logger()
@@ -79,27 +74,15 @@ class Email:
         return output_path + r"/" + output_name
 
 
-    def config_file(self):
+    def config_file(self,filehtml):
         # if the file content is not null, then config the email file
-        if self.check_file():
-            # zippath = os.path.join(readConfig.proDir, reportpath, "APITestResult.zip")
-            # # zip file
-            # files = glob.glob(reportpath + '\*')
-            # f = zipfile.ZipFile(zippath, 'w', zipfile.ZIP_DEFLATED)
-            # for file in files:
-            #     f.write(file)
-            # f.close()
-            zipPath=os.path.join( reportpath, "APITestResult.zip")
-            self.zipDir(reportpath,zipPath)
+        with open(filehtml, 'r') as f:
+            content = f.read()
+        # 设置html格式参数
+        part1 = MIMEText(content, 'html', 'utf-8')
+        self.msg.attach(part1)
 
-            reportfile = open(zipPath, 'rb').read()
-            filehtml = MIMEText(reportfile, 'base64', 'utf-8')
-            filehtml['Content-Type'] = 'application/octet-stream'
-            filehtml['Content-Disposition'] = 'attachment; filename="APITestResult.zip"'
-            self.msg.attach(filehtml)
-
-    def check_file(self):
-        reportpath = getpathInfo.set_reportPath()
+    def check_file(self,reportpath):
         if os.path.isfile(reportpath) and not os.stat(reportpath) == 0:
             return True
         else:
@@ -114,8 +97,6 @@ class Email:
 
     def send_email(self,resultPath):
         self.config_header()
-        #self.config_content()
-        self.config_file()
         self.config_html(resultPath)
         try:
             smtp = smtplib.SMTP()
@@ -128,7 +109,6 @@ class Email:
         except Exception as ex:
             self.logger.error(str(ex))
 
-
-
 if __name__ == "__main__":
-    Email().send_email(resultPath)
+    reportpath1 = getpathInfo.MakePath().set_reportPath('result',nowTime+'.html')
+    Email().send_email(reportpath1)

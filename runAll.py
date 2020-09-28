@@ -6,18 +6,20 @@ import readConfig
 import common.Log
 import common.emailDemo
 from common.configEmail import Email
+from common import Log
+send_mail = send_email()
 
-#send_mail = send_email()
-path = getpathInfo.get_Path()
-on_off = readConfig.ReadConfig().get_email('on_off')
-log = common.Log.logger
+path = getpathInfo.MakePath().get_Path()
+# on_off = readConfig.ReadConfig().get_email('on_off')
+log =Log.MyLog().get_log().get_logger()
 # resultPath = getpathInfo.set_reportPath()
 
 class AllTest:#定义一个类AllTest
     def __init__(self):#初始化一些参数和数据
         global resultPath
         #resultPath = os.path.join(report_path, "report.html")#result/report.html
-        resultPath = getpathInfo.set_reportPath()
+        # resultPath = getpathInfo.MakePath().get_resultpath('result')
+        resultPath = getpathInfo.MakePath().set_reportPath('result', getpathInfo.nowTime + '.html')
         self.caseListFile = os.path.join(path, "caselist.txt")#配置执行哪些测试文件的配置文件路径
         self.caseFile = os.path.join(path, "testCase")#真正的测试断言文件路径
         self.caseList = []
@@ -85,7 +87,7 @@ class AllTest:#定义一个类AllTest
             print("*********TEST END*********")
             #log.info("*********TEST END*********")
             #fp.close()
-        Email().send_email(resultPath)
+        # Email().send_email(resultPath)
 
 
 if __name__ == '__main__':
