@@ -53,6 +53,7 @@ class testUserLogin(unittest.TestCase):
             print(self.case+'测试失败')
             logger.info(self.case+'测试失败!')
             logger.info('断言失败:'+'exp='+self.status+'实际请求='+status)
+
         else:
             logger.info(self.case + '测试通过!')
             print(self.case+'测试通过')
