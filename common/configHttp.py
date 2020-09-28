@@ -30,32 +30,40 @@ class RunMain():
             print("method值错误:",httpMethod)
             logger.info("method值错误:",httpMethod)
 
-    def getToken(self,result):
-        return result.json()['loginInfo']['tokenVo']['token']
-
-    def getStatus(self,result):
-        return result.json()['result']['status']
+    # def getToken(self,result):
+    #     return result.json()['loginInfo']['tokenVo']['token']
+    #
+    # def getStatus(self,result):
+    #     return result.json()['result']['status']
 
     def getValue(self,response,param):
-        if response.status_code != 200:
-            print('请求失败：',response.status_code)
-        else:
-            if param == 'token':
-                return response.json()['loginInfo']['tokenVo']['token']
-            elif param == 'status':
-                return response.json()['result']['status']
-            elif param == 'userid':
-                return response.json()['loginInfo']['userId']
-            elif param == 'message':
-                return response.json()['result']['message']
+        try:
+            if response.status_code != 200:
+                print('请求失败：',response.status_code)
+            else:
+                if param.lower() == 'token':
+                    return response.json()['loginInfo']['tokenVo']['token']
+                elif param.lower() == 'status':
+                    return response.json()['result']['status']
+                elif param.lower() == 'userid':
+                    return response.json()['loginInfo']['userId']
+                elif param.lower() == 'message':
+                    return response.json()['result']['message']
+                elif param.lower() == 'targetid':
+                    return response.json()['loginInfo']['targetId']
+                elif param.lower() == 'userid':
+                    return response.json()['loginInfo']['userId']
+        except Exception as e:
+            print(format(e))
+            logger.info(e)
 
 if __name__ == '__main__':
     headers = {'Content-Type': 'application/json; charset=UTF-8'}
     param = {"uniqueCode":"9f773cdde5d268c0c191000a6ded7ec9","pwd":"7c4a8d09ca3762af61e59520943dc26494f8941b","login":"18900000000","appType":"SYN_HEALTH_MED"}
     test=RunMain().requests('post','https://cloud.synwing.com:8443/health_app_v2/noAuth/users/pwd/login', param,headers=headers)
     print(test.json())
-    print(RunMain().getValue(test,'message'))
-    print(RunMain().getStatus(test))
+    print(RunMain().getValue(test,'targetId'))
+    print(RunMain().getValue(test,'userid'))
     token=RunMain().getValue(test,'token')
     headers['Authorization']=token # 新增dict
     param1={'osType':'Android'}
