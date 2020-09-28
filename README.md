@@ -2,7 +2,7 @@
 测试框架
 
 configEmail.py   --配置Email  
-configHttp.py    --配置http，封装set\get方法  
+configHttp.py    --配置http，封装post\get方法  
 HTMLTestRunner.py--测试结果集成到HTML  
 Log.py           --写日志文件  
 getpathinfo.py   --配置文件路径，配置测试结果的存放位置  
