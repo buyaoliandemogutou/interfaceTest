@@ -1,0 +1,37 @@
+import pymysql
+
+from common.Log import logger
+logger = logger
+class jdbc:
+    def connect(self, host, port, user, password, database):
+        #连接数据库
+        try:
+            conn = pymysql.connect(
+                host=host, user=user, password=password,
+                database=database, port=port, charset='utf8')
+        except Exception as e:
+            logger.info('数据库连接时发生错误：'+e)
+            print('数据库连接时发生错误：'+e)
+        # 创建游标对象
+        cur = conn.cursor()
+        return cur
+
+    def readData(self,cur, sqlselect):
+        try:
+            cur.execute(sqlselect)
+            result = cur.fetchall()
+            return result
+        except Exception as e:
+            logger.info('读取数据失败：'+e)
+            print('读取数据失败：'+e)
+
+    def closeConnect(self,conn):
+        conn.close()
+
+if __name__=='__main__':
+    conn = jdbc().connect('192.168.2.34', 3306, 'root', 'admin123', 'cloud_account')
+    sqlSelect = '''
+    SELECT UserID FROM  user_t WHERE UserLoginID='18100000000' AND SourceType='SYN_HEALTH_MED'
+    '''
+    result = jdbc().readData(conn,sqlSelect)
+    print(result)
