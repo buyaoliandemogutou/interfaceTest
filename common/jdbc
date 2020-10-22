@@ -13,11 +13,12 @@ class jdbc:
             logger.info('数据库连接时发生错误：'+e)
             print('数据库连接时发生错误：'+e)
         # 创建游标对象
-        cur = conn.cursor()
-        return cur
 
-    def readData(self,cur, sqlselect):
+        return conn
+
+    def readData(self, conn, sqlselect):
         try:
+            cur = conn.cursor()
             cur.execute(sqlselect)
             result = cur.fetchall()
             return result
@@ -29,9 +30,12 @@ class jdbc:
         conn.close()
 
 if __name__=='__main__':
-    conn = jdbc().connect('192.168.2.34', 3306, 'root', 'admin123', 'cloud_account')
+    conn = pymysql.connect(host='192.168.2.34', port=3306, user='root', password='admin1234', database='cloud_account')
+    # cur = conn.cursor()
     sqlSelect = '''
     SELECT UserID FROM  user_t WHERE UserLoginID='18100000000' AND SourceType='SYN_HEALTH_MED'
     '''
-    result = jdbc().readData(conn,sqlSelect)
+    # cur.execute(sqlSelect)
+    # result = cur.fetchall()
+    result = jdbc().readData(conn, sqlSelect)
     print(result)
