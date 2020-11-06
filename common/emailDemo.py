@@ -15,7 +15,7 @@ class sendReport:
         mail_title = nowTime+' API测试报告'
 
         # 读取html文件内容
-        resultPath= getpathInfo.set_reportPath()
+        resultPath= getpathInfo().set_reportPath()
         f = open(resultPath, 'rb')  # HTML文件默认和当前文件在同一路径下，若不在同一路径下，需要指定要发送的HTML文件的路径
         mail_body = f.read()
         f.close()

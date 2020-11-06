@@ -1,0 +1,16 @@
+import pytest
+
+class TestClass:
+    def test_one(self):
+        x = 's'
+        print('test_one')
+        assert 'h' not in x
+
+
+    def test_two(self):
+        x = 'hello'
+        assert hasattr(x, "check")
+        print('test_two')
+
+if __name__ == '__main__':
+    pytest.main('-s' '')

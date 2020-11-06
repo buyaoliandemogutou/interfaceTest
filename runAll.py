@@ -4,14 +4,14 @@ import getpathInfo
 import unittest
 import readConfig
 import common.Log
-import common.emailDemo
+from common.emailDemo import sendReport
 from common.configEmail import Email
 from common import Log
-send_mail = send_email()
+# send_mail = sendReport().send_email()
 
 path = getpathInfo.MakePath().get_Path()
 # on_off = readConfig.ReadConfig().get_email('on_off')
-log =Log.MyLog().get_log().get_logger()
+log = Log.MyLog().get_log().get_logger()
 # resultPath = getpathInfo.set_reportPath()
 
 class AllTest:#定义一个类AllTest
